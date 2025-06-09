@@ -1,0 +1,43 @@
+
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=us-east-1
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - LS_LOG=info
+      - LOCALSTACK_HOST=localhost
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - ./localstack:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: vivo8642*
+      MYSQL_DATABASE: usersdb
+    volumes:
+      - db_data:/var/lib/mysql
+
+  hogmail:
+    image: axllent/mailpit
+    container_name: hogmail
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+volumes:
+  db_data:

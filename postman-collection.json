@@ -1,0 +1,214 @@
+{
+  "info": {
+    "name": "Spring SQS LocalStack Mail Example",
+    "description": "Collection de testes para a aplicação Spring Boot com SQS, PostgreSQL e Mailpit",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Create User - Success",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"João Silva\", \"email\": \"joao@example.com\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8090/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8090",
+          "path": ["users"]
+        },
+        "description": "Cria um novo usuário com sucesso. O usuário será salvo no PostgreSQL e uma mensagem será enviada para a fila SQS."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Create User - Maria Santos",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Maria Santos\", \"email\": \"maria.santos@example.com\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8090/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8090",
+          "path": ["users"]
+        },
+        "description": "Cria outro usuário para teste."
+      },
+      "response": []
+    },
+    {
+      "name": "3. Create User - Pedro Oliveira",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Pedro Oliveira\", \"email\": \"pedro.oliveira@company.com\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8090/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8090",
+          "path": ["users"]
+        },
+        "description": "Cria um terceiro usuário para teste."
+      },
+      "response": []
+    },
+    {
+      "name": "4. Create User - Missing Email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Ana Costa\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8090/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8090",
+          "path": ["users"]
+        },
+        "description": "Testa validação - requisição com email faltando (teste de erro)"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Create User - Missing Name",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"test@example.com\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8090/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8090",
+          "path": ["users"]
+        },
+        "description": "Testa validação - requisição com nome faltando (teste de erro)"
+      },
+      "response": []
+    },
+    {
+      "name": "6. Create User - Empty Body",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "http://localhost:8090/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8090",
+          "path": ["users"]
+        },
+        "description": "Testa validação - requisição com body vazio (teste de erro)"
+      },
+      "response": []
+    },
+    {
+      "name": "7. Create User - Invalid Email Format",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Lucas Ferreira\", \"email\": \"invalid-email-format\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8090/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8090",
+          "path": ["users"]
+        },
+        "description": "Testa validação - email com formato inválido (teste de erro)"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8090",
+      "type": "string"
+    },
+    {
+      "key": "mailpit_url",
+      "value": "http://localhost:8025",
+      "type": "string"
+    },
+    {
+      "key": "postgres_host",
+      "value": "localhost:5433",
+      "type": "string"
+    },
+    {
+      "key": "sqs_endpoint",
+      "value": "http://localhost:4566",
+      "type": "string"
+    }
+  ]
+}
+
